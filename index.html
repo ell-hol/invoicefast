@@ -648,6 +648,8 @@ Payment due within 30 days. Thank you for your business!</textarea
       let logoDataUrl = null;
 
       function handleLogoUpload(event) {
+        window?.datafast("logo-upload-event");
+
         const file = event.target.files[0];
         if (file) {
           const reader = new FileReader();
@@ -663,6 +665,8 @@ Payment due within 30 days. Thank you for your business!</textarea
 
       // Add item functionality
       function addItem() {
+        window?.datafast("clicked-add-item");
+
         const container = document.getElementById("itemsContainer");
         const newItem = document.createElement("div");
         newItem.className = "item-row";
@@ -683,6 +687,7 @@ Payment due within 30 days. Thank you for your business!</textarea
       }
 
       function removeItem(button) {
+        window?.datafast("removed-item");
         button.parentElement.remove();
         updatePreview();
       }
@@ -697,6 +702,8 @@ Payment due within 30 days. Thank you for your business!</textarea
 
       // Update preview
       function updatePreview() {
+        window?.datafast("clicked-preview");
+
         const currency = document.getElementById("currency").value;
 
         // Update logo
@@ -789,6 +796,7 @@ Payment due within 30 days. Thank you for your business!</textarea
 
       // Download functionality
       function downloadInvoice() {
+        window?.datafast("clicked-download");
         const { jsPDF } = window.jspdf;
         const invoice = document.getElementById("invoicePreview");
 
@@ -841,8 +849,12 @@ Payment due within 30 days. Thank you for your business!</textarea
             // Reset button state
             downloadBtn.textContent = originalText;
             downloadBtn.disabled = false;
+
+            window?.datafast("download-successful");
           })
           .catch((error) => {
+            window?.datafast("download-error");
+
             console.error("Error generating PDF:", error);
             alert(
               "Error generating PDF. Please try using Print (Ctrl+P) and save as PDF instead."
